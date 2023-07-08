@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import csv
 
-def scrap(arg):
+def scrap_sponsored_products(arg):
     print("Defnie arguments")
     options = Options()
     options.add_argument("--headless")
@@ -73,7 +73,7 @@ def scrap(arg):
 
 print("Start program.")
 
-list = scrap("computador gamer")
+list_sponsored_products = scrap_sponsored_products("computador gamer")
 
 print("End Scraping\nMake file")
 if path.exists('./products.csv'):
@@ -84,7 +84,7 @@ else:
     file = open('products.csv', 'w')
     whiter = csv.writer(file)
 print("Write data in file")
-for element in list:
+for element in list_sponsored_products:
     elements = [
         element['name'],
         element['category'],
