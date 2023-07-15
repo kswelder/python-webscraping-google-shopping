@@ -1,3 +1,5 @@
 *.csv
 .idea/
+.vscode/
 .~lock.products.csv#
+__pycache__/
