@@ -2,8 +2,12 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
-def scrap_sponsored_products(arg):
+def scrap_sponsored_products(args):
     print("Scraping sponsored products")
+
+    sponsored_products = []
+    size_list = 0
+
     options = Options()
     options.add_argument("--headless")
     driver = webdriver.Chrome(options)
@@ -14,7 +18,7 @@ def scrap_sponsored_products(arg):
 
     driver.implicitly_wait(10)
 
-    driver.find_element(By.XPATH, "//*[@id=\"REsRA\"]").send_keys(arg)
+    driver.find_element(By.XPATH, "//*[@id=\"REsRA\"]").send_keys(args['name'])
     driver.find_element(By.XPATH, "/html/body/c-wiz[1]/div/div/c-wiz/form/div[2]/div[1]/button").click()
 
     print("Search product")
@@ -27,12 +31,10 @@ def scrap_sponsored_products(arg):
 
     print("Get list sponsored products")
 
-    sponsored_products = []
-
     for inList in elements:
         product = {
             'name': '',
-            'category': arg,
+            'category': args['name'],
             'promotion': False,
             'price': '',
             'linkShop': '',
@@ -60,5 +62,13 @@ def scrap_sponsored_products(arg):
         except:
             pass
         sponsored_products.append(product)
+
+        try:
+            if size_list >= args['size']:
+                break
+        except:
+            if size_list >= 100:
+                break
+        size_list += 1
 
     return sponsored_products
