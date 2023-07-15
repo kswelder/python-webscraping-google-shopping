@@ -4,6 +4,9 @@ from selenium.webdriver.common.by import By
 
 def scrap_no_sponsored_products(args):
     print("Scraping no sponsored products")
+
+    list_no_sponsored_products = []
+
     options = Options()
     options.add_argument("--headless")
     driver = webdriver.Chrome(options)
@@ -19,8 +22,6 @@ def scrap_no_sponsored_products(args):
 
     element = driver.find_element(By.XPATH, '/html/body/div[6]/div/div[4]/div[3]/div/div[3]/div[2]/div[2]/div')
     elements = element.find_elements(By.TAG_NAME, 'div')
-
-    list_no_sponsored_products = []
 
     for inList in elements:
         product = {
@@ -53,6 +54,8 @@ def scrap_no_sponsored_products(args):
         except:
             pass
         list_no_sponsored_products.append(product)
+        if len(list_no_sponsored_products) >= 100:
+            break
 
     driver.close()
 
