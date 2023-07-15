@@ -6,6 +6,7 @@ def scrap_no_sponsored_products(args):
     print("Scraping no sponsored products")
 
     list_no_sponsored_products = []
+    size_list = 0
 
     options = Options()
     options.add_argument("--headless")
@@ -15,7 +16,7 @@ def scrap_no_sponsored_products(args):
 
     driver.implicitly_wait(10)
 
-    driver.find_element(By.XPATH, "//*[@id=\"REsRA\"]").send_keys(args)
+    driver.find_element(By.XPATH, "//*[@id=\"REsRA\"]").send_keys(args['name'])
     driver.find_element(By.XPATH, "/html/body/c-wiz[1]/div/div/c-wiz/form/div[2]/div[1]/button").click()
 
     print("Search product")
@@ -26,7 +27,7 @@ def scrap_no_sponsored_products(args):
     for inList in elements:
         product = {
             'name': '',
-            'category': args,
+            'category': args['name'],
             'promotion': False,
             'price': '',
             'linkShop': '',
@@ -54,8 +55,13 @@ def scrap_no_sponsored_products(args):
         except:
             pass
         list_no_sponsored_products.append(product)
-        if len(list_no_sponsored_products) >= 100:
-            break
+        try:
+            if size_list >= args['size']:
+                break
+        except:
+            if size_list >= 100:
+                break
+        size_list += 1
 
     driver.close()
 
