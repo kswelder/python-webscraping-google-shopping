@@ -1,9 +1,9 @@
 from os import path
 import csv
 
-def make_file(args):
-    list_sponsored_products = args['sponsored']
-    list_no_sponsored_products = args['no_sponsored']
+def make_file(sponsored, no_sponsored):
+    list_sponsored_products = sponsored
+    list_no_sponsored_products = no_sponsored
 
     print('Verify file exists')
     if path.exists('./products.csv'):
