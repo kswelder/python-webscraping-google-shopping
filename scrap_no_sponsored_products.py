@@ -34,11 +34,11 @@ def scrap_no_sponsored_products(args):
             'nameShop': ''
         }
         try:
-            product['name'] = inList.find_element(By.CLASS_NAME, 'tAxDx').text
+            product['name'] = inList.find_element(By.TAG_NAME, 'h3').text
         except:
             pass
         try:
-            product['price'] = inList.find_element(By.CLASS_NAME, 'a8Pemb OFFNJ').text
+            product['price'] = inList.find_element(By.CLASS_NAME, 'kHxwFf').find_element(By.TAG_NAME, 'span').find_element(By.TAG_NAME, 'span').text
         except:
             pass
         try:
@@ -54,14 +54,15 @@ def scrap_no_sponsored_products(args):
             product['promotion'] = True
         except:
             pass
-        list_no_sponsored_products.append(product)
         try:
             if size_list >= args['size']:
                 break
         except:
             if size_list >= 100:
                 break
-        size_list += 1
+        if product['name'] != '' and product['price'] != '' and product['nameShop'] != '' and product['linkShop'] != '':
+            list_no_sponsored_products.append(product)
+            size_list += 1
 
     driver.close()
 
